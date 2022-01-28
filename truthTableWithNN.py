@@ -5,8 +5,8 @@ def eta(i, iter):
     print(f"\r[{'-' * round(i * 100 / iter / 2)}{' ' * round(50 - (i * 100 / iter / 2))}]\
     {round(i * 100 / iter)}%", end='')
 
-HIDEN_NEURONS = 10
-EPOCH = 1000
+HIDEN_NEURONS = 4
+EPOCH = 5000
 LEARNING_RATE = 0.1
 
 OK = '\033[92m'
@@ -19,8 +19,8 @@ class NN():
     def __init__(self, X, y):
         self.input = X
         self.y = y
-        self.w1 = np.random.randn(HIDEN_NEURONS, X.shape[0])
-        self.w2 = np.random.randn(y.shape[0], HIDEN_NEURONS)
+        self.w1 = np.random.rand(HIDEN_NEURONS, X.shape[0])
+        self.w2 = np.random.rand(y.shape[0], HIDEN_NEURONS)
         self.b1 = np.zeros((HIDEN_NEURONS, 1))
         self.b2 = np.zeros((y.shape[0], 1))
         self.m = X.shape[1]
@@ -110,7 +110,7 @@ def verifTestCases(nb, tests, nn, keyword='AND'):
                 print(res, f"{OK}OK{RESET}")
                 score += 1
             else:
-                print(f"{FAIL}KO{RESET}")
+                print(res, f"{FAIL}KO{RESET}")
 
         if keyword == 'OR':
             res = tests[i][0] | tests[i][1]
@@ -118,7 +118,7 @@ def verifTestCases(nb, tests, nn, keyword='AND'):
                 print(res, f"{OK}OK{RESET}")
                 score += 1
             else:
-                print(f"{FAIL}KO{RESET}")
+                print(res, f"{FAIL}KO{RESET}")
 
         if keyword == 'XOR':
             res = tests[i][0] ^ tests[i][1]
@@ -126,7 +126,7 @@ def verifTestCases(nb, tests, nn, keyword='AND'):
                 print(res, f"{OK}OK{RESET}")
                 score += 1
             else:
-                print(f"{FAIL}KO{RESET}")
+                print(res, f"{FAIL}KO{RESET}")
 
         if keyword == 'NOR':
             res = np.array((tests[i][0] | tests[i][1]) ^ 1)
@@ -134,14 +134,14 @@ def verifTestCases(nb, tests, nn, keyword='AND'):
                 print(res, f"{OK}OK{RESET}")
                 score += 1
             else:
-                print(f"{FAIL}KO{RESET}")
+                print(res, f"{FAIL}KO{RESET}")
     
     return score * 100 / nb
 
 
 if __name__ == '__main__':
     NB_TESTS = 20
-    LOGICAL_KEYWORD = 'AND'
+    LOGICAL_KEYWORD = 'NOR'
     X, y = chooseLogicToTrain(LOGICAL_KEYWORD)
 
     nn = NN(X, y)
